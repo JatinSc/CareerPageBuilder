@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../services/axios";
 import Sections from "../components/sections/Sections";
 import Branding from "../components/branding/Branding";
 import PublishToggle from "../components/PublishToggle/PublishToggle";

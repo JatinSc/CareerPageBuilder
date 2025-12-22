@@ -32,6 +32,7 @@ A no-code tool that helps companies build and host simple, branded career pages.
 - **Custom Branding:** Users can pick primary colors, font-colors, and upload logos, banners.
 - **Dynamic Sections:** User can hide or unhide sections, reorder sections, and the best part is that a user can choose different layouts (video left, image right, etc.). which will give user a chance to create a unique layout for their career page. As it is our responsibility to provide options to the user so that they don't need to think about the layout.
 - **Job Board:** Simple listing management and currently I am using sample data provided in the assignment for the job board, which I have seeded in the database.
+- **Preview:** Users can see a preview ( as a draft) of their career page before publishing.
 
 
 ## Improvement Plan (Future Work)

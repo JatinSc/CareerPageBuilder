@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../api/axios";
+import api from "../services/axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Mail, Lock, Building2, ArrowRight, LayoutDashboard, Loader2, Eye, EyeOff } from "lucide-react";

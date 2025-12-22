@@ -1,4 +1,4 @@
-import api from "../../api/axios";
+import api from "../../services/axios";
 import { useState } from "react";
 import { Plus, Trash2, AlignLeft, Edit2, X, Save, Image as ImageIcon, Upload, ArrowUp, ArrowDown, Eye, EyeOff, LayoutTemplate, Video, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";

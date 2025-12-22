@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import api from "../api/axios";
+import api from "../services/axios";
 import { Search, Briefcase, Building2, ArrowRight, Star, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
 

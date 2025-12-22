@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../../api/axios";
+import api from "../../services/axios";
 import { Globe, Lock, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 

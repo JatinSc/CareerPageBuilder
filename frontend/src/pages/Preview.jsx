@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../services/axios";
 import { patterns } from "../components/branding/BannerPatterns";
 import toast from "react-hot-toast";
 import { CheckCircle, FileEdit, Share2 } from "lucide-react";

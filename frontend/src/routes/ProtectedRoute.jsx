@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import api from "../api/axios";
+import api from "../services/axios";
 import PageLoader from "../components/ui/PageLoader";
 
 export default function ProtectedRoute({ children }) {

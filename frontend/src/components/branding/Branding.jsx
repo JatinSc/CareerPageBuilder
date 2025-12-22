@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../../api/axios";
+import api from "../../services/axios";
 import { Palette, Image as ImageIcon, Save, Check, Type, Upload, Edit, X, Video, Plus, Loader2 } from "lucide-react";
 import { patterns } from "./BannerPatterns";
 import toast from "react-hot-toast";

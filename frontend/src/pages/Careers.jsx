@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import api from "../api/axios";
+import api from "../services/axios";
 import { patterns } from "../components/branding/BannerPatterns";
 import JobBoard from "../components/jobs/JobBoard";
 import toast from "react-hot-toast";
