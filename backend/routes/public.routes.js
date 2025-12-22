@@ -7,8 +7,27 @@ const router = express.Router();
 
 router.get("/api/companies", async (req, res) => {
     try {
-        const companies = await Company.find({ published: true })
-            .select("name slug branding");
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 9;
+        const search = req.query.search || "";
+
+        const query = { published: true };
+
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: "i" } },
+                { "branding.headline": { $regex: search, $options: "i" } }
+            ];
+        }
+
+        const totalCompanies = await Company.countDocuments(query);
+        const totalPages = Math.ceil(totalCompanies / limit);
+
+        const companies = await Company.find(query)
+            .select("name slug branding")
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .sort({ createdAt: -1 });
         
         // Since Job model doesn't currently link to companies, 
         // we'll fetch global job count for now.
@@ -20,8 +39,17 @@ router.get("/api/companies", async (req, res) => {
             jobCount: globalJobCount // Using global count as placeholder per current architecture
         }));
 
-        res.json(companiesWithStats);
+        res.json({
+            companies: companiesWithStats,
+            pagination: {
+                total: totalCompanies,
+                page,
+                totalPages,
+                hasMore: page < totalPages
+            }
+        });
     } catch (error) {
+        console.error("Error fetching companies:", error);
         res.status(500).json({ message: "Failed to fetch companies" });
     }
 });

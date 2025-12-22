@@ -32,3 +32,8 @@ I focused on manual integration testing rather than unit tests for this iteratio
    - Broken video URLs (should show placeholder).
    - Empty states (when no jobs are posted).
    - Empty state when no company found on home page.
+   - Incase of no cultural video added by a editor. videolayout will be blocked and a message will be shown.
+   - If a used has added video and image both in one section. then preview will be shown as per the selected layout.
+   - In case of no image added by a editor. default image will be shown in image layout.
+   - Both image upload and add image url option has been provided. user can upload image either by uploading from local device or by adding image url.
+   - In case of no banner image user can select default banner image from the provided options.

@@ -1,9 +1,13 @@
+import { useState } from "react";
 import api from "../../api/axios";
-import { Globe, Lock } from "lucide-react";
+import { Globe, Lock, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function PublishToggle({ company, setCompany }) {
+  const [loading, setLoading] = useState(false);
+
   const toggle = async () => {
+    setLoading(true);
     try {
       const res = await api.put("/api/company/publish", {
         published: !company.published
@@ -13,29 +17,34 @@ export default function PublishToggle({ company, setCompany }) {
     } catch (err) {
         console.error("Failed to toggle publish state", err);
         toast.error("Failed to update publish state");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <button
-      className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-200 shadow-sm ${
+      disabled={loading}
+      className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-200 shadow-lg ${
         company.published 
-          ? "bg-red-50 text-red-600 hover:bg-red-100 border border-red-200" 
-          : "bg-green-600 text-white hover:bg-green-700 hover:shadow-md"
-      }`}
+          ? "bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 shadow-red-900/10" 
+          : "bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-900/20 hover:shadow-emerald-900/30 active:transform active:scale-95"
+      } ${loading ? "opacity-70 cursor-wait" : ""}`}
       onClick={toggle}
     >
-      {company.published ? (
-        <>
-          <Lock size={18} />
-          <span>Unpublish Page</span>
-        </>
+      {loading ? (
+        <Loader2 size={18} className="animate-spin" />
+      ) : company.published ? (
+        <Lock size={18} />
       ) : (
-        <>
-          <Globe size={18} />
-          <span>Publish Page</span>
-        </>
+        <Globe size={18} />
       )}
+      <span>
+        {loading 
+          ? (company.published ? "Unpublishing..." : "Publishing...") 
+          : (company.published ? "Unpublish Page" : "Publish Page")
+        }
+      </span>
     </button>
   );
 }
