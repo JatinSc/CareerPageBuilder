@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../../api/axios";
-import { Palette, Image as ImageIcon, Save, Check, Type, Upload, Edit, X, Video, Plus } from "lucide-react";
+import { Palette, Image as ImageIcon, Save, Check, Type, Upload, Edit, X, Video, Plus, Loader2 } from "lucide-react";
 import { patterns } from "./BannerPatterns";
 import toast from "react-hot-toast";
 
@@ -44,9 +44,12 @@ const defaultBranding = {
   headline: ""
 };
 
+import { uploadImage } from "../../utils/uploadImage";
+
 export default function Branding({ company, setCompany }) {
   const [form, setForm] = useState({ ...defaultBranding, ...company.branding });
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [originalForm, setOriginalForm] = useState(null);
@@ -83,7 +86,7 @@ export default function Branding({ company, setCompany }) {
     }
   };
 
-  const handleLogoUpload = (e) => {
+  const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
@@ -91,16 +94,22 @@ export default function Branding({ company, setCompany }) {
         return;
       }
       
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm({ ...form, logoUrl: reader.result });
-        toast.success("Logo uploaded successfully");
-      };
-      reader.readAsDataURL(file);
+      setUploading(true);
+      const toastId = toast.loading("Uploading logo...");
+      
+      const url = await uploadImage(file);
+      
+      if (url) {
+        setForm(prev => ({ ...prev, logoUrl: url }));
+        toast.success("Logo uploaded successfully", { id: toastId });
+      } else {
+        toast.error("Failed to upload logo", { id: toastId });
+      }
+      setUploading(false);
     }
   };
 
-  const handleBannerUpload = (e) => {
+  const handleBannerUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
@@ -108,12 +117,18 @@ export default function Branding({ company, setCompany }) {
         return;
       }
       
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm({ ...form, bannerUrl: reader.result });
-        toast.success("Banner uploaded successfully");
-      };
-      reader.readAsDataURL(file);
+      setUploading(true);
+      const toastId = toast.loading("Uploading banner...");
+      
+      const url = await uploadImage(file);
+      
+      if (url) {
+        setForm(prev => ({ ...prev, bannerUrl: url }));
+        toast.success("Banner uploaded successfully", { id: toastId });
+      } else {
+        toast.error("Failed to upload banner", { id: toastId });
+      }
+      setUploading(false);
     }
   };
 
@@ -187,15 +202,17 @@ export default function Branding({ company, setCompany }) {
                    </button>
                     <button
                       onClick={save}
-                      disabled={saving || saved}
+                      disabled={saving || saved || uploading}
                       className={`flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-medium transition-all duration-200 ${
                         saved 
                          ? "bg-green-50 text-green-700 border border-green-200 cursor-default"
-                         : "bg-gray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-md active:transform active:scale-95"
+                         : (saving || uploading)
+                           ? "bg-gray-400 cursor-not-allowed text-white" 
+                           : "bg-gray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-md active:transform active:scale-95"
                       }`}
                     >
                       {saved ? <Check size={18} /> : <Save size={18} />}
-                      {saved ? "Saved Changes" : saving ? "Saving..." : "Save"}
+                      {saved ? "Saved Changes" : saving ? "Saving..." : uploading ? "Uploading..." : "Save"}
                     </button>
                 </div>
             ) : (
@@ -294,15 +311,15 @@ export default function Branding({ company, setCompany }) {
                      </label>
                      <div className="flex flex-col gap-3">
                         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                            <label className={`flex items-center gap-2 px-3 py-2 md:px-4 bg-white border border-gray-200 rounded-lg shadow-sm transition-colors w-full md:w-auto ${isEditing ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed opacity-60'}`}>
-                                <Upload size={16} className="text-gray-600" />
-                                <span className="text-xs md:text-sm font-medium text-gray-700 truncate">Upload Image</span>
+                            <label className={`flex items-center gap-2 px-3 py-2 md:px-4 bg-white border border-gray-200 rounded-lg shadow-sm transition-colors w-full md:w-auto ${isEditing && !uploading ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed opacity-60'}`}>
+                                {uploading ? <Loader2 size={16} className="text-gray-600 animate-spin" /> : <Upload size={16} className="text-gray-600" />}
+                                <span className="text-xs md:text-sm font-medium text-gray-700 truncate">{uploading ? "Uploading..." : "Upload Image"}</span>
                                 <input 
                                     type="file" 
                                     className="hidden" 
                                     accept="image/*"
                                     onChange={handleLogoUpload}
-                                    disabled={!isEditing}
+                                    disabled={!isEditing || uploading}
                                 />
                             </label>
                             <span className="hidden md:inline text-sm text-gray-400 font-medium">OR</span>
@@ -453,15 +470,15 @@ export default function Branding({ company, setCompany }) {
                      </label>
                      <div className="flex flex-col gap-3">
                         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                            <label className={`flex items-center gap-2 px-3 py-2 md:px-4 bg-white border border-gray-200 rounded-lg shadow-sm transition-colors w-full md:w-auto ${isEditing ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed opacity-60'}`}>
-                                <Upload size={16} className="text-gray-600" />
-                                <span className="text-xs md:text-sm font-medium text-gray-700 truncate">Upload Image</span>
+                            <label className={`flex items-center gap-2 px-3 py-2 md:px-4 bg-white border border-gray-200 rounded-lg shadow-sm transition-colors w-full md:w-auto ${isEditing && !uploading ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed opacity-60'}`}>
+                                {uploading ? <Loader2 size={16} className="text-gray-600 animate-spin" /> : <Upload size={16} className="text-gray-600" />}
+                                <span className="text-xs md:text-sm font-medium text-gray-700 truncate">{uploading ? "Uploading..." : "Upload Image"}</span>
                                 <input 
                                     type="file" 
                                     className="hidden" 
                                     accept="image/*"
                                     onChange={handleBannerUpload}
-                                    disabled={!isEditing}
+                                    disabled={!isEditing || uploading}
                                 />
                             </label>
                             <span className="hidden md:inline text-sm text-gray-400 font-medium">OR</span>

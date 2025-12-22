@@ -1,7 +1,8 @@
 import api from "../../api/axios";
 import { useState } from "react";
-import { Plus, Trash2, AlignLeft, Edit2, X, Save, Image as ImageIcon, Upload, ArrowUp, ArrowDown, Eye, EyeOff, LayoutTemplate, Video } from "lucide-react";
+import { Plus, Trash2, AlignLeft, Edit2, X, Save, Image as ImageIcon, Upload, ArrowUp, ArrowDown, Eye, EyeOff, LayoutTemplate, Video, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { uploadImage } from "../../utils/uploadImage";
 
 export default function Sections({ sections, setSections, branding = {} }) {
   const [content, setContent] = useState("");
@@ -13,23 +14,36 @@ export default function Sections({ sections, setSections, branding = {} }) {
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({ type: "", content: "", image: "", layout: "", videoUrl: "" });
   const [expanded, setExpanded] = useState({});
+  const [uploading, setUploading] = useState(false);
 
   const toggleExpand = (id) => {
     setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleImageChange = (e, isEdit = false) => {
+  const handleImageChange = async (e, isEdit = false) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size should be less than 5MB");
+        return;
+      }
+
+      setUploading(true);
+      const toastId = toast.loading("Uploading image...");
+
+      const url = await uploadImage(file);
+
+      if (url) {
         if (isEdit) {
-          setEditForm(prev => ({ ...prev, image: reader.result }));
+          setEditForm(prev => ({ ...prev, image: url }));
         } else {
-          setImage(reader.result);
+          setImage(url);
         }
-      };
-      reader.readAsDataURL(file);
+        toast.success("Image uploaded successfully", { id: toastId });
+      } else {
+        toast.error("Failed to upload image", { id: toastId });
+      }
+      setUploading(false);
     }
   };
 
@@ -299,10 +313,10 @@ export default function Sections({ sections, setSections, branding = {} }) {
                     <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                   </div>
                   <span className="text-gray-400 text-sm hidden md:block">OR</span>
-                  <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 rounded-lg px-3 py-2 flex items-center justify-center gap-2 transition-colors w-full md:w-auto">
-                    <Upload size={16} className="text-gray-500" />
-                    <span className="text-sm text-gray-600">Upload</span>
-                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageChange(e)} />
+                  <label className={`cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 rounded-lg px-3 py-2 flex items-center justify-center gap-2 transition-colors w-full md:w-auto ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                    {uploading ? <Loader2 size={16} className="text-gray-500 animate-spin" /> : <Upload size={16} className="text-gray-500" />}
+                    <span className="text-sm text-gray-600">{uploading ? "Uploading..." : "Upload"}</span>
+                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageChange(e)} disabled={uploading} />
                   </label>
                 </div>
                 {image && (
@@ -499,10 +513,10 @@ export default function Sections({ sections, setSections, branding = {} }) {
                         <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                       </div>
                       <span className="text-gray-400 text-sm hidden md:block">OR</span>
-                      <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 rounded-lg px-3 py-2 flex items-center justify-center gap-2 transition-colors w-full md:w-auto">
-                        <Upload size={16} className="text-gray-500" />
-                        <span className="text-sm text-gray-600">Upload</span>
-                        <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageChange(e, true)} />
+                      <label className={`cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 rounded-lg px-3 py-2 flex items-center justify-center gap-2 transition-colors w-full md:w-auto ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        {uploading ? <Loader2 size={16} className="text-gray-500 animate-spin" /> : <Upload size={16} className="text-gray-500" />}
+                        <span className="text-sm text-gray-600">{uploading ? "Uploading..." : "Upload"}</span>
+                        <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageChange(e, true)} disabled={uploading} />
                       </label>
                     </div>
                   </div>
@@ -510,7 +524,7 @@ export default function Sections({ sections, setSections, branding = {} }) {
                     <button onClick={cancelEditing} className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
                       <X size={18} />
                     </button>
-                    <button onClick={saveEdit} className="p-2 text-green-600 hover:bg-green-50 rounded-lg">
+                    <button onClick={saveEdit} className={`p-2 text-green-600 hover:bg-green-50 rounded-lg ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={uploading}>
                       <Save size={18} />
                     </button>
                   </div>
