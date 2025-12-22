@@ -12,7 +12,37 @@ import './App.css'
 function App() {
   return (
     <BrowserRouter>
-      <Toaster position="bottom-center" />
+      <Toaster 
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            background: '#0f172a', // slate-900
+            color: '#e2e8f0', // slate-200
+            border: '1px solid #1e293b', // slate-800
+            padding: '12px 24px',
+            borderRadius: '12px',
+            fontSize: '14px',
+          },
+          success: {
+            iconTheme: {
+              primary: '#3b82f6', // blue-500
+              secondary: '#fff',
+            },
+            style: {
+              border: '1px solid #1e293b', // slate-800
+            }
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444', // red-500
+              secondary: '#fff',
+            },
+            style: {
+              border: '1px solid #7f1d1d', // red-900/50 approx
+            }
+          },
+        }}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
