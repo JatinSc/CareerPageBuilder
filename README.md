@@ -34,7 +34,7 @@ A no-code tool that helps companies build and host simple, branded career pages.
 
 ## Improvement Plan (Future Work)
 If I had more time, here's what I'd tackle next:
-1. **Analytics Dashboard:** Track page views, "Apply" clicks, rating system for job postings so that a company can see how well their job postings are performing.
+1. **Analytics Dashboard:** Track page views, "Apply" clicks, rating system (currently it is static) for job postings so that a company can see how well their job postings are performing.
 2. **Custom Domains:** Allow users to map `careers.theircompany.com` via CNAME records.
 3. **Rich Text Editor:** Currently using a simple textarea; a WYSIWYG editor would be better for formatting job descriptions.
 4. **AI Writing Assistant:** Integrate OpenAI to help users write job descriptions.
