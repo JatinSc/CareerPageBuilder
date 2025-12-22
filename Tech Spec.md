@@ -37,3 +37,4 @@ I focused on manual integration testing rather than unit tests for this iteratio
    - In case of no image added by a editor. default image will be shown in image layout.
    - Both image upload and add image url option has been provided. user can upload image either by uploading from local device or by adding image url.
    - In case of no banner image user can select default banner image from the provided options.
+   - In case user tries to access the career page with invalid company slug or unpublished company page. then 404 not found page will be shown with relevant information.
