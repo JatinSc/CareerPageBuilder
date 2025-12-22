@@ -35,7 +35,8 @@ export const signup = async (req, res) => {
 
     res.cookie("token", token, {
         httpOnly: true,
-        sameSite: "lax"
+        secure: true,          // ✅ REQUIRED for HTTPS
+        sameSite: "none",      // ✅ REQUIRED for cross-domain
     }).status(201).json({
         message: "Signup successful"
     })
@@ -56,12 +57,11 @@ export const login = async (req, res) => {
         companyId: user.companyId
     });
 
-    res
-        .cookie("token", token, {
-            httpOnly: true,
-            sameSite: "lax"
-        })
-        .json({ message: "Login successful" });
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,          // ✅ REQUIRED for HTTPS
+        sameSite: "none",      // ✅ REQUIRED for cross-domain
+    }).json({ message: "Login successful" });
 };
 
 export const logout = (req, res) => {
