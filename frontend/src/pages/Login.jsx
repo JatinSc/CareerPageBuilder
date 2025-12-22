@@ -64,16 +64,16 @@ export default function Login() {
 
             <div className="relative z-10 px-6 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex flex-col items-center mb-10">
-                    <div className="h-16 w-16 bg-gradient-to-tr from-blue-600 to-blue-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-900/50 mb-6 transform rotate-3">
+                    <div className="h-16 w-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/20 mb-6 border border-white/10">
                         <LayoutDashboard className="text-white h-8 w-8" />
                     </div>
-                    <h2 className="text-center text-3xl font-bold text-white tracking-tight">
-                        {isSignup ? "Start By Setting Up Your Account!" : "Welcome Back!"}
+                    <h2 className="text-center text-3xl font-bold text-white tracking-tight mb-2">
+                        {isSignup ? "Create an Account" : "Welcome Back"}
                     </h2>
-                    <p className="mt-3 text-center text-slate-400 max-w-xs mx-auto">
+                    <p className="text-center text-slate-400 max-w-sm mx-auto leading-relaxed">
                         {isSignup 
-                            ? "Welcome to CareerBuilder! Let's get started by setting up your account." 
-                            : "Log in to manage your career page and connect with talent."}
+                            ? "Join thousands of companies building their teams with CareerBuilder." 
+                            : "Enter your details below to access your hiring dashboard."}
                     </p>
                 </div>
 

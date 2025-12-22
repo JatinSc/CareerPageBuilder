@@ -148,15 +148,31 @@ export default function Editor() {
               <Eye size={18} />
               <span className="hidden md:inline">Preview</span>
             </button>
-            <a
-              href={`/${company.slug}/careers`}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 p-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-full hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-900/20 transition-all"
-            >
-              <ExternalLink size={18} />
-              <span className="hidden md:inline">View Live Page</span>
-            </a>
+            
+            {company.published ? (
+              <a
+                href={`/${company.slug}/careers`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 p-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-full hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-900/20 transition-all"
+              >
+                <ExternalLink size={18} />
+                <span className="hidden md:inline">View Live Page</span>
+              </a>
+            ) : (
+              <div className="relative group">
+                <button
+                  disabled
+                  className="flex items-center gap-2 p-2 md:px-4 md:py-2 bg-slate-800 text-slate-500 rounded-full cursor-not-allowed border border-slate-700 opacity-75"
+                >
+                  <ExternalLink size={18} />
+                  <span className="hidden md:inline">View Live Page</span>
+                </button>
+                <div className="absolute right-0 top-full mt-2 w-48 p-2 bg-slate-900 text-xs text-slate-400 rounded-lg shadow-xl border border-slate-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 text-center">
+                  To see it live, please publish the page first.
+                </div>
+              </div>
+            )}
           </div>
         </header>
 

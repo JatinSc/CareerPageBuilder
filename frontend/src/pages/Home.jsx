@@ -139,10 +139,10 @@ export default function Home() {
                     href={`/${company.slug}/careers`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group bg-slate-900/40 backdrop-blur-sm rounded-2xl p-6 border border-slate-800 hover:border-blue-500/30 hover:bg-slate-900/60 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 flex flex-col h-full"
+                    className="group bg-slate-900/40 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-slate-800 hover:border-blue-500/30 hover:bg-slate-900/60 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 flex flex-col h-full"
                 >
-                    <div className="flex items-start justify-between mb-6">
-                    <div className="h-16 w-16 rounded-xl border border-slate-700/50 p-2 flex items-center justify-center bg-slate-950 overflow-hidden shadow-sm group-hover:scale-105 transition-transform duration-300">
+                    <div className="flex items-start justify-between mb-4 md:mb-6">
+                    <div className="h-12 w-12 md:h-16 md:w-16 rounded-xl border border-slate-700/50 p-2 flex items-center justify-center bg-slate-950 overflow-hidden shadow-sm group-hover:scale-105 transition-transform duration-300">
                         {company.branding?.logoUrl ? (
                         <img 
                             src={company.branding.logoUrl} 
@@ -150,34 +150,34 @@ export default function Home() {
                             className="w-full h-full object-contain"
                         />
                         ) : (
-                        <Building2 className="text-slate-600" size={32} />
+                        <Building2 size={24} className="text-slate-600 md:w-8 md:h-8" />
                         )}
                     </div>
-                    <span className="inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full text-xs font-semibold">
-                        <Briefcase size={12} />
+                    <span className="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-semibold">
+                        <Briefcase size={10} className="md:w-3 md:h-3" />
                         {company.jobCount} Openings
                     </span>
                     </div>
 
-                    <div className="flex-1 mb-6">
-                    <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                    <div className="flex-1 mb-4 md:mb-6">
+                    <div className="flex justify-between items-start mb-2 md:mb-3">
+                        <h3 className="text-base md:text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                         {company.name}
                         </h3>
-                        <div className="flex items-center gap-1 bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
-                        <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                        <span className="text-sm font-bold text-amber-500">{company.rating}</span>
+                        <div className="flex items-center gap-1 bg-amber-500/10 px-1.5 py-0.5 md:px-2 md:py-1 rounded-lg border border-amber-500/20">
+                        <Star className="w-3 h-3 md:w-3.5 md:h-3.5 text-amber-500 fill-amber-500" />
+                        <span className="text-xs md:text-sm font-bold text-amber-500">{company.rating}</span>
                         </div>
                     </div>
-                    <p className="text-slate-400 text-sm line-clamp-2 h-10 leading-relaxed">
+                    <p className="text-slate-400 text-xs md:text-sm line-clamp-2 h-8 md:h-10 leading-relaxed">
                         {company.branding?.headline || "Building the future of technology."}
                     </p>
                     </div>
 
-                    <div className="mt-auto pt-5 border-t border-slate-800 flex items-center justify-between text-blue-400 font-medium text-sm">
+                    <div className="mt-auto pt-4 md:pt-5 border-t border-slate-800 flex items-center justify-between text-blue-400 font-medium text-xs md:text-sm">
                     <span className="group-hover:text-blue-300 transition-colors">View Career Page</span>
-                    <div className="bg-blue-500/10 p-1.5 rounded-full group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
-                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                    <div className="bg-blue-500/10 p-1 md:p-1.5 rounded-full group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                        <ArrowRight size={14} className="md:w-4 md:h-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                     </div>
                 </a>

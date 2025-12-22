@@ -27,10 +27,12 @@ A no-code tool that helps companies build and host simple, branded career pages.
    ```
 
 ## What I Built
+- **Home Page:** I have created a home page where a user can see all the companies(published) and their job postings. they can click on any company to see all the job postings for that company along with search functionality.
 - **Visual Editor:** we can see real-time preview of changes, as all the changes will be saved in database just after one click.
 - **Custom Branding:** Users can pick primary colors, font-colors, and upload logos, banners.
 - **Dynamic Sections:** User can hide or unhide sections, reorder sections, and the best part is that a user can choose different layouts (video left, image right, etc.). which will give user a chance to create a unique layout for their career page. As it is our responsibility to provide options to the user so that they don't need to think about the layout.
 - **Job Board:** Simple listing management and currently I am using sample data provided in the assignment for the job board, which I have seeded in the database.
+
 
 ## Improvement Plan (Future Work)
 If I had more time, here's what I'd tackle next:
