@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Mail, Lock, Building2, ArrowRight, LayoutDashboard, Loader2 } from "lucide-react";
+import PageLoader from "../components/ui/PageLoader";
 
 export default function Login() {
     const [isSignup, setIsSignup] = useState(false);
@@ -10,7 +11,23 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [companyName, setCompanyName] = useState("");
     const [loading, setLoading] = useState(false);
+    const [verifyingAuth, setVerifyingAuth] = useState(true);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                await api.get("/api/company/me");
+                navigate("/editor");
+            } catch (err) {
+                // Not authenticated, stay on login page
+                setVerifyingAuth(false);
+            }
+        };
+        checkAuth();
+    }, [navigate]);
+
+    if (verifyingAuth) return <PageLoader text="Verifying session..." />;
 
     const handleSubmit = async (e) => {
         e.preventDefault();

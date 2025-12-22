@@ -3,6 +3,7 @@ import api from "../api/axios";
 import { patterns } from "../components/branding/BannerPatterns";
 import toast from "react-hot-toast";
 import { CheckCircle, FileEdit, Share2 } from "lucide-react";
+import PageLoader from "../components/ui/PageLoader";
 
 export default function Preview() {
   const [data, setData] = useState(null);
@@ -20,7 +21,7 @@ export default function Preview() {
     fetchPreview();
   }, []);
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <PageLoader text="Loading Preview..." />;
 
   const { company, sections } = data;
   const visibleSections = sections.filter(s => s.visible !== false);

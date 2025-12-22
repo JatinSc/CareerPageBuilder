@@ -6,6 +6,7 @@ import Preview from "./pages/Preview";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Careers from "./pages/Careers";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import './App.css'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         /> 
         <Route path="/preview" element={<Preview />} />
         <Route path="/:companySlug/careers" element={<Careers />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

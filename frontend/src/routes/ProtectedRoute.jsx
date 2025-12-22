@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import api from "../api/axios";
+import PageLoader from "../components/ui/PageLoader";
 
 export default function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ export default function ProtectedRoute({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div>Checking auth...</div>;
+  if (loading) return <PageLoader text="Verifying access..." />;
 
   return allowed ? children : <Navigate to="/login" />;
 }

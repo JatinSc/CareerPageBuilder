@@ -6,6 +6,7 @@ import PublishToggle from "../components/PublishToggle/PublishToggle";
 import { useNavigate } from "react-router-dom";
 import { LayoutDashboard, Palette, Layers, Settings, LogOut, ExternalLink, Eye, Menu, X } from "lucide-react";
 import toast from "react-hot-toast";
+import PageLoader from "../components/ui/PageLoader";
 
 export default function Editor() {
   const navigate = useNavigate();
@@ -32,11 +33,7 @@ export default function Editor() {
   }, [navigate]);
 
   if (!company) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    return <PageLoader text="Loading Editor..." />;
   }
 
   const handleLogout = async () => {
