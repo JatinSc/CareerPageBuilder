@@ -33,6 +33,7 @@ A no-code tool that helps companies build and host simple, branded career pages.
 - **Dynamic Sections:** User can hide or unhide sections, reorder sections, and the best part is that a user can choose different layouts (video left, image right, etc.). which will give user a chance to create a unique layout for their career page. As it is our responsibility to provide options to the user so that they don't need to think about the layout.
 - **Job Board:** Simple listing management and currently I am using sample data provided in the assignment for the job board, which I have seeded in the database.
 - **Preview:** Users can see a preview ( as a draft) of their career page before publishing.
+- **Career Page:** Users can see their career page with job openings along with other details of the company. Job listing have different UI based on the device. for desktop, it will show job listings in a grid layout. for mobile, it will show job listings in a card layout. so don't forget to check it out.
 
 
 ## Improvement Plan (Future Work)

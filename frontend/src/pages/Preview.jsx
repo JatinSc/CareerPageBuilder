@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import api from "../services/axios";
 import { patterns } from "../components/branding/BannerPatterns";
 import toast from "react-hot-toast";
-import { CheckCircle, FileEdit, Share2 } from "lucide-react";
+import { CheckCircle, FileEdit, Share2, Briefcase } from "lucide-react";
 import PageLoader from "../components/ui/PageLoader";
+import JobBoard from "../components/jobs/JobBoard";
 
 export default function Preview() {
   const [data, setData] = useState(null);
@@ -23,7 +24,7 @@ export default function Preview() {
 
   if (!data) return <PageLoader text="Loading Preview..." />;
 
-  const { company, sections } = data;
+  const { company, sections, jobs } = data;
   const visibleSections = sections.filter(s => s.visible !== false);
   const branding = company.branding || {};
   const primaryColor = branding.primaryColor || "#000000";
@@ -36,6 +37,13 @@ export default function Preview() {
   const headline = branding.headline || "";
   const selectedPatternId = branding.selectedBannerPattern;
   const SelectedPattern = patterns.find(p => p.id === selectedPatternId)?.Component;
+
+  const scrollToJobs = () => {
+    const element = document.getElementById('job-board');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const getEmbedUrl = (url) => {
     if (!url) return null;
@@ -142,6 +150,14 @@ export default function Preview() {
               {headline}
             </p>
           )}
+
+          <button
+            onClick={scrollToJobs}
+            className="mt-8 px-8 py-3 bg-white rounded-full font-bold shadow-lg hover:bg-gray-50 transition-all lg:text-[15px] text-[10px] transform hover:-translate-y-1 hover:shadow-xl"
+            style={{ color: primaryColor }}
+          >
+            View Open Positions
+          </button>
         </div>
       </div>
 
@@ -319,6 +335,13 @@ export default function Preview() {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Job Board Section */}
+      <div id="job-board" className="py-24 relative z-20 bg-slate-50/50">
+        <div className="max-w-7xl mx-auto px-6">
+           <JobBoard jobs={jobs || []} branding={branding} />
         </div>
       </div>
     </div>

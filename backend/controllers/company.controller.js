@@ -80,7 +80,11 @@ export const getPreview = async (req, res) => {
             visible: true
         }).sort({ order: 1 });
 
-        res.json({ company, sections });
+        // Fetch jobs for preview (matching public view behavior)
+        // Note: Currently fetching all open jobs as per existing architecture
+        const jobs = await Job.find({ status: "open" });
+
+        res.json({ company, sections, jobs });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
