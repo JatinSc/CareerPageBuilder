@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import Sections from "../components/sections/Sections";
 import Branding from "../components/branding/Branding";
-import PublishToggle from "../components/Publishtoggle/PublishToggle";
+import PublishToggle from "../components/PublishToggle/PublishToggle";
 import { useNavigate } from "react-router-dom";
 import { LayoutDashboard, Palette, Layers, Settings, LogOut, ExternalLink, Eye, Menu, X } from "lucide-react";
 import toast from "react-hot-toast";
