@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ChevronLeft, Home } from "lucide-react";
 
-export default function NotFound() {
+export default function NotFound(props) {
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 text-center font-sans relative overflow-hidden">
       {/* Fixed Background Gradient Blobs */}
@@ -24,7 +24,7 @@ export default function NotFound() {
         </h1>
 
         <p className="text-slate-400 mb-8 max-w-lg mx-auto text-base md:text-lg leading-relaxed">
-          Oops! Looks like you've ventured into the unknown. The page you're looking for doesn't exist or has been moved.
+        {props?.text ?? "  Oops! Looks like you've ventured into the unknown. The page you're looking for doesn't exist or has been moved."} 
         </p>
 
         <Link 

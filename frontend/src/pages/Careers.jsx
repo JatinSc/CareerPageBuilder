@@ -4,10 +4,12 @@ import api from "../services/axios";
 import { patterns } from "../components/branding/BannerPatterns";
 import JobBoard from "../components/jobs/JobBoard";
 import toast from "react-hot-toast";
+import NotFound from "./NotFound";
 
 export default function Careers() {
   const { companySlug } = useParams();
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +18,11 @@ export default function Careers() {
         setData(res.data);
       } catch (err) {
         console.error(err);
-        toast.error("Failed to load career page");
+        if (err.response?.status === 404) {
+           setError("not_found");
+        } else {
+           toast.error("Failed to load career page");
+        }
       }
     };
     fetchData();
@@ -27,6 +33,12 @@ export default function Careers() {
       document.title = `${data.company.name} Careers`;
     }
   }, [data]);
+
+  if (error === "not_found") {
+    return (
+        <NotFound text="The career page you are looking for is currently unpublished or does not exist. Please check back later." />
+    );
+  }
 
   if (!data) return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
