@@ -12,8 +12,12 @@ export default function Editor() {
   const navigate = useNavigate();
   const [company, setCompany] = useState(null);
   const [sections, setSections] = useState([]);
-  const [activeTab, setActiveTab] = useState("branding");
+  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("editorActiveTab") || "branding");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("editorActiveTab", activeTab);
+  }, [activeTab]);
 
   useEffect(() => {
     const fetchData = async () => {
