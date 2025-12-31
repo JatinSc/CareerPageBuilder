@@ -2,6 +2,9 @@
 
 A no-code tool that helps companies build and host simple, branded career pages. I built this to solve the problem of complex CMSs being too heavy for simple hiring needs.
 
+# deployed frontend link
+https://careerpagebuilderfrontend.netlify.app/
+
 ## How to Run
 
 ### Prerequisites
